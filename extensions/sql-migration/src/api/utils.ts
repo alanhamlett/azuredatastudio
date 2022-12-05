@@ -28,6 +28,7 @@ export const MenuCommands = {
 	CancelMigration: 'sqlmigration.cancel.migration',
 	RetryMigration: 'sqlmigration.retry.migration',
 	StartMigration: 'sqlmigration.start',
+	StartLoginMigration: 'sqlmigration.login.start',
 	IssueReporter: 'workbench.action.openIssueReporter',
 	OpenNotebooks: 'sqlmigration.openNotebooks',
 	NewSupportRequest: 'sqlmigration.newsupportrequest',
@@ -292,6 +293,22 @@ export function getMigrationStatusWithErrors(migration: azure.DatabaseMigration)
 	warningCount += (properties.migrationStatusWarnings?.completeRestoreErrorMessage ?? '').length > 0 ? 1 : 0;
 
 	return constants.STATUS_VALUE(migrationStatus) + (constants.STATUS_WARNING_COUNT(migrationStatus, warningCount) ?? '');
+}
+
+export function getLoginStatusMessage(loginFound: boolean): string {
+	if (loginFound) {
+		return constants.LOGINS_FOUND;
+	} else {
+		return constants.LOGINS_NOT_FOUND;
+	}
+}
+
+export function getLoginStatusImage(loginFound: boolean): IconPath {
+	if (loginFound) {
+		return IconPathHelper.completedMigration;
+	} else {
+		return IconPathHelper.notFound;
+	}
 }
 
 export function getPipelineStatusImage(status: string | undefined): IconPath {
